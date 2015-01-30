@@ -79,7 +79,8 @@ module I18n
         xcode_extensions = ['xcodeproj', 'xcassets', 'xcworkspace']
         return false if xcode_extensions.include?extension # directory for xcode
 
-        # TODO: support Pods, Carthage
+        library_directories = ['Pods', 'Carthage']
+        return false if library_directories.include?file_name # support Pods, Carthage
 
         true
       end
