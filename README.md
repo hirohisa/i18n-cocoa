@@ -1,6 +1,6 @@
 # I18n::Cocoa
 
-TODO: Write a gem description
+Manage translation and localization with static analysis, for iOS, OSX
 
 ## Installation
 
@@ -24,7 +24,7 @@ TODO: Write usage instructions here
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/i18n-cocoa/fork )
+1. Fork it ( https://github.com/hirohisa/i18n-cocoa/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

@@ -12,3 +12,11 @@
 *.o
 *.a
 mkmf.log
+
+# xcode
+*.pbxuser
+xcuserdata
+*.xccheckout
+DerivedData
+*.ipa
+*.xcuserstate

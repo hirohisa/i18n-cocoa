@@ -6,14 +6,14 @@ require 'i18n/cocoa/version'
 Gem::Specification.new do |spec|
   spec.name          = "i18n-cocoa"
   spec.version       = I18n::Cocoa::VERSION
-  spec.authors       = ["Hirohisa Kawasaki"]
-  spec.email         = ["hirohisa.kawasaki@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.authors       = ["Hirohisa Kawasaki", "Shiya Keita"]
+  spec.email         = ["hirohisa.kawasaki@gmail.com", "keita.shiya@gmail.com"]
+  spec.summary       = %q{Manage translation and localization}
+  spec.description   = %q{Manage translation and localization with static analysis, for iOS}
   spec.homepage      = ""
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = Dir.glob("{lib,spec}/**/**") + %w(README.md LICENSE)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]

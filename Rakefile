@@ -5,3 +5,6 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+task :run do
+  ruby "example/a.rb"
+end
