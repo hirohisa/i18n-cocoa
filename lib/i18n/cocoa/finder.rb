@@ -6,11 +6,19 @@ module I18n
     class Finder
 
       def initialize attributes
-        @localized_macro_string = attributes[:localized_macro_string]
+        config = default_config.update attributes
+        @localized_macro_string = config[:localized_macro_string]
         @method_file_paths = []
         @localized_file_paths = []
 
-        _search_file_paths File.absolute_path(attributes[:search_path])
+        _search_file_paths File.absolute_path(config[:search_path])
+      end
+
+      def default_config
+        {
+          :localized_macro_string => 'NSLocalizedString',
+          :search_path            => '.'
+        }
       end
 
       def ensure_localization
