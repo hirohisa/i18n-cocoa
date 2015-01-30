@@ -1,34 +1,31 @@
 # encoding: utf-8
-require 'pp'
 
 module I18n
   module Cocoa
 
     class Finder
 
-      def initialize localized_macro_string='NSLocalizedString'
-        @localized_macro_string = localized_macro_string
+      def initialize attributes
+        @localized_macro_string = attributes[:localized_macro_string]
         @method_file_paths = []
         @localized_file_paths = []
 
-        _search_file_paths File.absolute_path(".")
+        _search_file_paths File.absolute_path(attributes[:search_path])
       end
 
       def ensure_localization
         failure_issues = []
 
         # use variable key for localization
-        lines_with_variable_and_logic = _find_lines_using_variable_key_in_method_files
-        lines_with_variable_and_logic.each do |l|
-          failure_issues << Utils.create_issue("found to set varible keys with logic", l)
-        end
+        lines = _find_lines_using_variable_key_in_method_files
+        failure_issues << Utils.create_issue("found to set varible keys with logic", lines) if lines.count > 0
 
         # use localized key but key doesnt exist in strings file
         used_keys = _get_used_localized_keys_from_method_files
         localized_keys = _get_localized_keys_from_strings_files
 
         forgot_keys = _contain_keys_in_localized_keys used_keys, localized_keys
-        failure_issues << Utils.create_issue("found to forget keys", forgot_keys.join(", ")) if forgot_keys.count > 0
+        failure_issues << Utils.create_issue("found to forget keys", forgot_keys) if forgot_keys.count > 0
 
         [failure_issues.count == 0, failure_issues]
       end

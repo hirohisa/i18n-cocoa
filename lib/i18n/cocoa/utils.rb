@@ -1,6 +1,15 @@
 module I18n
   module Cocoa
 
+    class Issue
+      attr_reader :description, :values
+
+      def initialize description, values
+        @description = description
+        @values = values
+      end
+    end
+
     module Utils
 
       def self.encode string
@@ -14,8 +23,8 @@ module I18n
         string.encode(temporal_encoding, string.encoding, replace_options).encode(string.encoding)
       end
 
-      def self.create_issue title, description
-        "#{title}: #{description}"
+      def self.create_issue description, values
+        Issue.new description, values
       end
     end
   end
