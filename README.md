@@ -1,7 +1,13 @@
-I18n::Cocoa
+i18n::Cocoa
 ===========
 
-Manage translation and localization with static analysis, for iOS, OSX
+i18n-cocoa manages translation and localization with analysis, for iOS, OSX.
+It helps you find to missing and unused localized strings in file.
+
+Support languages
+----------
+
+Objective-C, Objective-C++, Swift
 
 Installation
 ----------
@@ -23,19 +29,39 @@ Or install it yourself as:
 Usage
 ----------
 
-**Check health**
+### Check health
+
+`I18n::Cocoa.health` checks if any keys are missing or not used:
 ```ruby
+require 'i18n/cocoa'
+
+success, failure_issues = I18n::Cocoa.health
+```
+
+**Custom macro and specify directory**
+```ruby
+require 'i18n/cocoa'
 
 attributes = {:localized_macro_string => 'LocalizedString', :search_path => 'iOSProject'}
 success, failure_issues = I18n::Cocoa.health attributes
-
 ```
+
+### Remove unused keys
+
+`I18n::Cocoa.remove_unused` remove unused keys from `.strings` file if any keys are not used:
+```ruby
+require 'i18n/cocoa'
+
+success, failure_issues = I18n::Cocoa.remove_unused
+```
+
 
 Features
 ----------
 
 - [x] Ensure to not forget to add localized string literal with key in `.strings` files
 - [x] Find to unused localizaed key in files and strip them from these files
+- [ ] Output documentation
 - [ ] Comprehensive Unit Test Coverage
 
 Contributing
