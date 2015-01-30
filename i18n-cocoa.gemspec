@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["hirohisa.kawasaki@gmail.com", "keita.shiya@gmail.com"]
   spec.summary       = %q{Manage translation and localization}
   spec.description   = %q{Manage translation and localization with static analysis, for iOS}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/hirohisa/i18n-cocoa"
   spec.license       = "MIT"
 
   spec.files         = Dir.glob("{lib,spec}/**/**") + %w(README.md LICENSE)
