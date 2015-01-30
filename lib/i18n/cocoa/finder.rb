@@ -51,13 +51,13 @@ module I18n
         Dir::foreach(directory_path) do |f|
           current_file_path = "#{directory_path}/#{f}"
 
-          assort_with_extension current_file_path unless File.directory?current_file_path
+          _assort_with_extension current_file_path unless File.directory?current_file_path
 
           _search_file_paths current_file_path if _need_to_search_in_directory? current_file_path
         end
       end
 
-      def assort_with_extension file_path
+      def _assort_with_extension file_path
         return if File.directory?file_path
 
         extension = file_path.split('.').last
@@ -65,7 +65,9 @@ module I18n
         when 'm', 'mm', 'swift'
           @method_file_paths << file_path
         when 'strings'
-          @localized_file_paths << file_path
+          directory_name = file_path.split('/').last(2).first # e.g. 'en.lproj'
+          _extension = directory_name.split('.').last
+          @localized_file_paths << file_path if _extension == 'lproj'
         end
       end
 
