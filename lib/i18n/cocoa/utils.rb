@@ -5,8 +5,13 @@ module I18n
 
       def self.encode string
         # invalid byte sequence in US-ASCII (ArgumentError)
-        string.force_encoding('UTF-8')
-        string.encode("UTF-8", "UTF-8")
+        replace_invalid_byte string
+      end
+
+      def self.replace_invalid_byte string
+        replace_options = { invalid: :replace, undef: :replace, replace: '?' }
+        temporal_encoding = (string.encoding == Encoding::UTF_8 ? Encoding::UTF_16BE : Encoding::UTF_8)
+        string.encode(temporal_encoding, string.encoding, replace_options).encode(string.encoding)
       end
 
       def self.create_issue title, description

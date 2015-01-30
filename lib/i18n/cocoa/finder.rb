@@ -9,7 +9,7 @@ module I18n
       def initialize localized_macro_string='NSLocalizedString'
         @localized_macro_string = localized_macro_string
         @method_file_paths = []
-        @lozalized_file_paths = []
+        @localized_file_paths = []
 
         _search_file_paths File.absolute_path(".")
       end
@@ -33,43 +33,43 @@ module I18n
         [failure_issues.count == 0, failure_issues]
       end
 
-private
-    def _search_file_paths directory_path
-      Dir::foreach(directory_path) do |f|
-        current_file_path = "#{directory_path}/#{f}"
+      private
+      def _search_file_paths directory_path
+        Dir::foreach(directory_path) do |f|
+          current_file_path = "#{directory_path}/#{f}"
 
-        assort_with_extension current_file_path unless File.directory?current_file_path
+          assort_with_extension current_file_path unless File.directory?current_file_path
 
-        _search_file_paths current_file_path if _need_to_search_in_directory? current_file_path
+          _search_file_paths current_file_path if _need_to_search_in_directory? current_file_path
+        end
       end
-    end
 
-    def assort_with_extension file_path
-      return if File.directory?file_path
+      def assort_with_extension file_path
+        return if File.directory?file_path
 
-      extension = file_path.split('.').last
-      case extension
-      when 'm', 'mm', 'swift'
-        @method_file_paths << file_path
-      when 'strings'
-        @localized_file_paths << file_path
+        extension = file_path.split('.').last
+        case extension
+        when 'm', 'mm', 'swift'
+          @method_file_paths << file_path
+        when 'strings'
+          @localized_file_paths << file_path
+        end
       end
-    end
 
-    def _need_to_search_in_directory? file_path
-      return false unless File.directory? file_path
+      def _need_to_search_in_directory? file_path
+        return false unless File.directory? file_path
 
-      file_name = file_path.split('/').last
-      return false if file_name.start_with?"." # '.', '..', '.git'
+        file_name = file_path.split('/').last
+        return false if file_name.start_with?"." # '.', '..', '.git'
 
-      extension = file_name.split('.').last
-      xcode_extensions = ['xcodeproj', 'xcassets', 'xcworkspace']
-      return false if xcode_extensions.include?extension # directory for xcode
+        extension = file_name.split('.').last
+        xcode_extensions = ['xcodeproj', 'xcassets', 'xcworkspace']
+        return false if xcode_extensions.include?extension # directory for xcode
 
-      # TODO: support Pods, Carthage
+        # TODO: support Pods, Carthage
 
-      true
-    end
+        true
+      end
 
       def _find_lines_using_variable_key_in_method_files
         lines = []
@@ -118,15 +118,16 @@ private
       def _get_localized_keys_from_strings_files
         keys = []
 
-        @lozalized_file_paths.each do |file_path|
-          f = File.new(path, "r")
+        @localized_file_paths.each do |file_path|
+          f = File.new(file_path, "r")
           f.readlines.each do |l|
+            l = Utils.encode l
             next if l.start_with?("//")
 
-            match = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[\r\n]*$/.match(l)
-            next if match.nil?
+            m = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[\r\n]*$/.match(l)
+            next if m.nil?
 
-            keys << match[1] if match.size == 3
+            keys << m[1] if m.size == 3
           end
         end
 
