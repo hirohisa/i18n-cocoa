@@ -10,6 +10,9 @@ module I18n
     def self.health attributes = {}
       finder = Finder.new(config.update attributes)
       finder.ensure_localization
+
+      unused_keys = finder.find_unused_localization
+      finder.delete_localization_keys unless unused_keys.empty?
     end
 
     def self.config

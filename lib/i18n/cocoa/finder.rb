@@ -30,6 +30,22 @@ module I18n
         [failure_issues.count == 0, failure_issues]
       end
 
+      def find_unused_localization
+        # use localized key but key doesnt exist in strings file
+        used_keys = _get_used_localized_keys_from_method_files
+        localized_keys = _get_localized_keys_from_strings_files
+
+        unused_keys = _contain_keys_in_localized_keys localized_keys, used_keys
+
+        unused_keys
+      end
+
+      def delete_localization_keys keys
+        for file_path in @localized_file_paths do
+          _rewrite_strings_file file_path, keys
+        end
+      end
+
       private
       def _search_file_paths directory_path
         Dir::foreach(directory_path) do |f|
@@ -136,6 +152,28 @@ module I18n
 
         diff
       end
+
+      def _rewrite_strings_file file_path, exclude_keys
+        temp_path = './tmp'
+        temp_file = File.new(temp_path, "w")
+
+        f = File.new(file_path, "r")
+        f.readlines.each do |l|
+          needs_copy = true
+
+          match = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[\r\n]*$/.match(l)
+          if !match.nil? && match.size == 3
+            needs_copy = false if exclude_keys.include?match[1]
+          end
+
+          temp_file.puts l if needs_copy
+        end
+        f.close
+        temp_file.close
+
+        FileUtils.move temp_path, file_path
+      end
+
     end
   end
 end
