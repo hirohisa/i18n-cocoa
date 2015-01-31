@@ -6,7 +6,7 @@ require 'i18n/cocoa/version'
 Gem::Specification.new do |spec|
   spec.name          = "i18n-cocoa"
   spec.version       = I18n::Cocoa::VERSION
-  spec.authors       = ["Hirohisa Kawasaki", "Shiya Keita"]
+  spec.authors       = ["Hirohisa Kawasaki", "Keita Shiya"]
   spec.email         = ["hirohisa.kawasaki@gmail.com", "keita.shiya@gmail.com"]
   spec.summary       = %q{Manage translation and localization}
   spec.description   = %q{Manage translation and localization with static analysis, for iOS}
