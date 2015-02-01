@@ -1,4 +1,4 @@
-i18n::Cocoa
+i18n::Cocoa [![Gem-version](https://img.shields.io/gem/v/i18n-cocoa.svg)](https://rubygems.org/gems/i18n-cocoa) [![Gem-downloads](https://img.shields.io/gem/dt/i18n-cocoa.svg)](https://rubygems.org/gems/i18n-cocoa) [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hirohisa/i18n-cocoa/blob/master/LICENSE)
 ===========
 
 i18n-cocoa manages translation and localization with analysis, for iOS, OSX.
