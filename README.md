@@ -60,8 +60,9 @@ Features
 ----------
 
 - [x] Ensure to not forget to add localized string literal with key in `.strings` files
-- [x] Find to unused localizaed key in files and strip them from these files
-- [ ] Output documentation
+- [x] Find to unused localized keys in files and strip them from these files
+- [x] Documentation
+- [ ] Find unused localized keys in files per language
 - [ ] Comprehensive Unit Test Coverage
 
 Contributing

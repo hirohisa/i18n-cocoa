@@ -2,7 +2,11 @@ module I18n
   module Cocoa
 
     class Issue
-      attr_reader :description, :values
+      # @return [string]    set information
+      attr_reader :description
+
+      # @return [array]     set problem's data
+      attr_reader :values
 
       def initialize description, values
         @description = description

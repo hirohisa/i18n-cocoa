@@ -5,8 +5,13 @@ module I18n
 
     class Finder
 
+      # search files and scan code class
+      #
+      # default setting, it scan macro format is 'NSLocalizedString' in current directory.
+      #
+      # @param [hash]     attributes are settings data about file path, marco ...more.
       def initialize attributes
-        config = default_config.update attributes
+        config = _default_config.update attributes
         @localized_macro_string = config[:localized_macro_string]
         @method_file_paths = []
         @localized_file_paths = []
@@ -14,13 +19,10 @@ module I18n
         _search_file_paths File.absolute_path(config[:search_path])
       end
 
-      def default_config
-        {
-          :localized_macro_string => 'NSLocalizedString',
-          :search_path            => '.'
-        }
-      end
-
+      # validate localization
+      #
+      # @return [bool]    result for validation, success is true, failure is false
+      # @return [array]   failure issues for localization
       def ensure_localization
         failure_issues = []
 
@@ -38,8 +40,10 @@ module I18n
         [failure_issues.count == 0, failure_issues]
       end
 
+      # use localized key but key doesnt exist in strings file
+      #
+      # @return [array]   unused keys that are not include code in project, exist in localized strings file
       def find_unused_localization
-        # use localized key but key doesnt exist in strings file
         used_keys = _get_used_localized_keys_from_method_files
         localized_keys = _get_localized_keys_from_strings_files
 
@@ -48,13 +52,26 @@ module I18n
         unused_keys
       end
 
+      # remove localized keys from localized strings file
+      #
+      # @param [array]    keys are localized keys for removing from strings file
+      # @return [bool]    true when finish to run
       def delete_localization_keys keys
         for file_path in @localized_file_paths do
           _rewrite_strings_file file_path, keys
         end
+
+        true
       end
 
       private
+      def _default_config
+        {
+          :localized_macro_string => 'NSLocalizedString',
+          :search_path            => '.'
+        }
+      end
+
       def _search_file_paths directory_path
         Dir::foreach(directory_path) do |f|
           current_file_path = "#{directory_path}/#{f}"
