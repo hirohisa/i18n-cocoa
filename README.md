@@ -42,7 +42,7 @@ success, failure_issues = I18n::Cocoa.health
 ```ruby
 require 'i18n/cocoa'
 
-attributes = {:localized_macro_string => 'LocalizedString', :search_path => 'iOSProject'}
+attributes = { localized_macro_string: 'LocalizedString', search_path: 'iOSProject'}
 success, failure_issues = I18n::Cocoa.health attributes
 ```
 

@@ -11,8 +11,8 @@ module I18n
     #
     # @param [hash]     attributes if you want to change from default attributes
     # default attributes
-    #   :localized_macro_string => 'NSLocalizedString',
-    #   :search_path            => '.'
+    #   localized_macro_string: 'NSLocalizedString',
+    #   search_path:            '.'
     #
     # @return [bool]    true when finish to run with success
     def self.health attributes = {}

@@ -67,8 +67,8 @@ module I18n
       private
       def _default_config
         {
-          :localized_macro_string => 'NSLocalizedString',
-          :search_path            => '.'
+          localized_macro_string: 'NSLocalizedString',
+          search_path:            '.'
         }
       end
 
