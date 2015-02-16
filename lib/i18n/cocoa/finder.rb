@@ -165,10 +165,10 @@ module I18n
             l = Utils.encode l
             next if l.start_with?("//")
 
-            m = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[\r\n]*$/.match(l)
+            m = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[ ]*(\/{2,})?.*[\r\n]*$/.match(l)
             next if m.nil?
 
-            keys << m[1] if m.size == 3
+            keys << m[1] if m.size == 4
           end
         end
 
@@ -189,8 +189,8 @@ module I18n
         f.readlines.each do |l|
           needs_copy = true
 
-          match = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[\r\n]*$/.match(l)
-          if !match.nil? && match.size == 3
+          match = /^"([^"]+)"[ ]*=[ ]*"([^"]+)";[ ]*(\/{2,})?.*[\r\n]*$/.match(l)
+          if !match.nil? && match.size == 4
             needs_copy = false if exclude_keys.include?match[1]
           end
 
